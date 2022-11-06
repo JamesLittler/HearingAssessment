@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Cache-Control" content="no-store" />
+<style>
+body {
+	max-width: 985px;
+	margin: 0 auto;
+}
+
+h2 {
+	color: red;
+}
+
+#soundtable1 table,
+#soundtable2 table,
+#soundtable3 table,
+#soundtable4 table {
+	border-collapse: collapse;
+	border: 0px solid blue;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#soundtable1 tr,
+#soundtable2 tr,
+#soundtable3 tr,
+#soundtable4 tr {
+	border: 0px;
+	margin: 0;
+	padding: 0;
+}
+
+#soundtable1 td ,
+#soundtable2 td,
+#soundtable3 td ,
+#soundtable4 td {
+	border: 0px;
+	margin: 0;
+	padding: 0;
+	font-size: 10px;
+}
+
+#soundtable1 .soundbutton,
+#soundtable2 .soundbutton,
+#soundtable3 .soundbutton,
+#soundtable4 .soundbutton {
+	height: 10px;
+	width: 40px;
+	border: 1px solid rgb(131, 128, 128);
+	margin: 1px 5px 0px 5px;
+}
+
+#soundtable1 .afterclick,
+#soundtable2 .afterclick,
+#soundtable3 .afterclick,
+#soundtable4 .afterclick {
+	height: 10px;
+	width: 40px;
+	border: 1px solid rgb(0, 0, 0);
+	margin: 1px 5px 0px 5px;
+}
+
+#soundtable1 .soundbutton:hover,
+#soundtable2 .soundbutton:hover,
+#soundtable3 .soundbutton:hover,
+#soundtable4 .soundbutton:hover {
+	height: 10px;
+	width: 40px;
+	background-color: rgb(93, 173, 226) !important;
+	border: 1px solid rgb(14, 13, 13);
+	margin: 1px 5px 0px 5px;
+}
+
+#soundtable1 .afterclick:hover,
+#soundtable2 .afterclick:hover,
+#soundtable3 .afterclick:hover,
+#soundtable4 .afterclick:hover {
+	height: 10px;
+	width: 40px;
+	background-color: rgb(93, 173, 226) !important;
+	border: 1px solid rgb(0, 0, 0);
+	margin: 1px 5px 0px 5px;
+}
+</style>
+
+
+
+<script>
+var frequencies = [30, 45, 60, 90, 125, 187, 250, 375, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000, 12000, 16000];
+var loudnesses = [0, -3, -6, -9, -12, -15, -18, -21, -24, -27, -30, -33, -36, -39, -42, -45, -48, -51, -54, -57, -60, -63, -66, -69, -72, -75, -78, -81, -84, -87, -90, -93, -96, -99];
+var numRows = loudnesses.length;
+var numColumns = frequencies.length;
+var lastClicked = Array(frequencies.length).fill(1);
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+if (AudioContext) {
+	var context = new AudioContext();
+}
+
+function createSound1() {
+	var myId = event.srcElement.id;
+	thisObject = document.getElementById(myId);
+	var freq = thisObject.dataset.frequency;
+	var decibelLevel = thisObject.dataset.loudness;
+	var o = context.createOscillator();
+	var g = context.createGain();
+	o.type = "sine";
+	o.frequency.setValueAtTime(freq, context.currentTime);
+	var gainValue = Math.pow(10, (decibelLevel / 20));
+	g.gain.setValueAtTime(gainValue, context.currentTime)
+	o.connect(g).connect(context.destination);
+	o.start();
+	o.stop(context.currentTime + 1);
+
+
+	var columnNumber = frequencies.indexOf(parseInt(freq, 10));
+	if (lastClicked[columnNumber] < 1) {
+		var idLastClicked = document.getElementById('button1_' + freq + '_' + lastClicked[columnNumber]);
+		idLastClicked.className = 'soundbutton';
+	}
+
+	thisObject.className = 'afterclick';
+	lastClicked[columnNumber] = decibelLevel;
+
+	// create footer
+	var footerObject;
+	footerObject = document.getElementById('footer1_' + freq);
+	footerObject.innerHTML = decibelLevel;
+
+}
+
+function createSound2() {
+	var myId = event.srcElement.id;
+	thisObject = document.getElementById(myId);
+	var freq = thisObject.dataset.frequency;
+	var decibelLevel = thisObject.dataset.loudness;
+	var o = context.createOscillator();
+	var g = context.createGain();
+	o.type = "sine";
+	o.frequency.setValueAtTime(freq, context.currentTime);
+	var gainValue = Math.pow(10, (decibelLevel / 20));
+	g.gain.setValueAtTime(gainValue, context.currentTime)
+	o.connect(g).connect(context.destination);
+	o.start();
+	o.stop(context.currentTime + 1);
+
+
+	var columnNumber = frequencies.indexOf(parseInt(freq, 10));
+	if (lastClicked[columnNumber] < 1) {
+		var idLastClicked = document.getElementById('button2_' + freq + '_' + lastClicked[columnNumber]);
+		idLastClicked.className = 'soundbutton';
+	}
+
+	thisObject.className = 'afterclick';
+	lastClicked[columnNumber] = decibelLevel;
+
+	// create footer
+	var footerObject;
+	footerObject = document.getElementById('footer2_' + freq);
+	footerObject.innerHTML = decibelLevel;
+
+}
+
+function createSound3() {
+	var myId = event.srcElement.id;
+	thisObject = document.getElementById(myId);
+	var freq = thisObject.dataset.frequency;
+	var decibelLevel = thisObject.dataset.loudness;
+	var o = context.createOscillator();
+	var g = context.createGain();
+	o.type = "sine";
+	o.frequency.setValueAtTime(freq, context.currentTime);
+	var gainValue = Math.pow(10, (decibelLevel / 20));
+	g.gain.setValueAtTime(gainValue, context.currentTime)
+	o.connect(g).connect(context.destination);
+	o.start();
+	o.stop(context.currentTime + 1);
+
+
+	var columnNumber = frequencies.indexOf(parseInt(freq, 10));
+	if (lastClicked[columnNumber] < 1) {
+		var idLastClicked = document.getElementById('button3_' + freq + '_' + lastClicked[columnNumber]);
+		idLastClicked.className = 'soundbutton';
+	}
+
+	thisObject.className = 'afterclick';
+	lastClicked[columnNumber] = decibelLevel;
+
+	// create footer
+	var footerObject;
+	footerObject = document.getElementById('footer3_' + freq);
+	footerObject.innerHTML = decibelLevel;
+
+}
+
+function createSound4() {
+	var myId = event.srcElement.id;
+	thisObject = document.getElementById(myId);
+	var freq = thisObject.dataset.frequency;
+	var decibelLevel = thisObject.dataset.loudness;
+	var o = context.createOscillator();
+	var g = context.createGain();
+	o.type = "sine";
+	o.frequency.setValueAtTime(freq, context.currentTime);
+	var gainValue = Math.pow(10, (decibelLevel / 20));
+	g.gain.setValueAtTime(gainValue, context.currentTime)
+	o.connect(g).connect(context.destination);
+	o.start();
+	o.stop(context.currentTime + 1);
+
+
+	var columnNumber = frequencies.indexOf(parseInt(freq, 10));
+	if (lastClicked[columnNumber] < 1) {
+		var idLastClicked = document.getElementById('button4_' + freq + '_' + lastClicked[columnNumber]);
+		idLastClicked.className = 'soundbutton';
+	}
+
+	thisObject.className = 'afterclick';
+	lastClicked[columnNumber] = decibelLevel;
+
+	// create footer
+	var footerObject;
+	footerObject = document.getElementById('footer4_' + freq);
+	footerObject.innerHTML = decibelLevel;
+
+}
+
+function createTable() {
+	createTable1();
+	createTable2();
+	createTable3();
+	createTable4();
+}
+
+function createTable1() {
+	if (context) {
+		var tbl = document.createElement('table');
+
+		// heading with frequencies
+		var tr1 = tbl.insertRow();
+		var td0 = tr1.insertCell();
+		var headerdB = document.createElement("span");
+		headerdB.innerHTML = 'dB';
+		td0.style.textAlign = 'center';
+		td0.appendChild(headerdB);
+
+		for (var col1 = 0; col1 < numColumns; col1++) {
+			var td1 = tr1.insertCell();
+			var freqDisplay = document.createElement("span");
+			td1.style.fontSize = 'xx-small';
+			if (frequencies[col1] > 999)
+				freqDisplay.innerHTML = frequencies[col1] / 1000 + 'kHz';
+			else
+				freqDisplay.innerHTML = frequencies[col1] + 'Hz';
+			td1.appendChild(freqDisplay);
+			td1.style.textAlign = 'center';
+		}
+
+		for (var row = 0; row < numRows; row++) {
+			var tr = tbl.insertRow();
+			// first column with decibels
+			td0 = tr.insertCell();
+			td0.style.borderRightColor = 'black';
+			td0.style.borderRightWidth = '2px';
+			td0.style.borderRightStyle = 'solid';
+			td0.style.textAlign = 'right';
+			td0.style.whiteSpace = 'nowrap';
+			// td0.style.width = '50px';
+			// td0.style.tableLayout = 'fixed';
+
+			var tableCellContent = document.createElement("span");
+
+			if (loudnesses[row] % 2 == 0) {
+				tableCellContent.innerHTML = loudnesses[row] + " &ndash;&ndash;"
+			} else {
+				tableCellContent.innerHTML = "&ndash;";
+			}
+			td0.appendChild(tableCellContent);
+
+			for (var col = 0; col < numColumns; col++) {
+				var td = tr.insertCell();
+				var bt = document.createElement("BUTTON");
+				bt.id = 'button1_' + frequencies[col] + '_' + loudnesses[row];
+
+				bt.className = "soundbutton";
+				var colorRate = 1 - (row / 120) * 2;
+				bt.style.backgroundColor = `hsla(24,100%,50%, ${colorRate})`;
+
+
+
+				bt.dataset.frequency = frequencies[col];
+				bt.dataset.loudness = loudnesses[row];
+				bt.onclick = function() {
+					createSound1()
+				};
+				td.appendChild(bt);
+
+			}
+		}
+
+		// footer with decibels
+		tr1 = tbl.insertRow();
+		td0 = tr1.insertCell();
+		td0.style.textAlign = 'center';
+		var footerdB = document.createElement("span");
+		footerdB.innerHTML = 'dB';
+		td0.appendChild(footerdB);
+
+		for (col1 = 0; col1 < numColumns; col1++) {
+			var td1 = tr1.insertCell();
+			var sp = document.createElement("SPAN");
+			sp.id = 'footer1_' + frequencies[col1];
+			td1.appendChild(sp);
+			td1.style.textAlign = 'center';
+		}
+
+		document.getElementById("soundtable1").appendChild(tbl);
+	}
+	else {
+		var para = document.createElement("p");
+		para.innerHTML = "Sorry, your web browser does not support HTML5 audio which is needed for this page.";
+		para.style.color = "red";
+		document.getElementById("soundtable1").appendChild(para);
+	}
+}
+
+function createTable2() {
+	if (context) {
+		var tbl = document.createElement('table');
+
+		// heading with frequencies
+		var tr1 = tbl.insertRow();
+		var td0 = tr1.insertCell();
+		var headerdB = document.createElement("span");
+		headerdB.innerHTML = 'dB';
+		td0.style.textAlign = 'center';
+		td0.appendChild(headerdB);
+
+		for (var col1 = 0; col1 < numColumns; col1++) {
+			var td1 = tr1.insertCell();
+			var freqDisplay = document.createElement("span");
+			td1.style.fontSize = 'xx-small';
+			if (frequencies[col1] > 999)
+				freqDisplay.innerHTML = frequencies[col1] / 1000 + 'kHz';
+			else
+				freqDisplay.innerHTML = frequencies[col1] + 'Hz';
+			td1.appendChild(freqDisplay);
+			td1.style.textAlign = 'center';
+		}
+
+		for (var row = 0; row < numRows; row++) {
+			var tr = tbl.insertRow();
+			// first column with decibels
+			td0 = tr.insertCell();
+			td0.style.borderRightColor = 'black';
+			td0.style.borderRightWidth = '2px';
+			td0.style.borderRightStyle = 'solid';
+			td0.style.textAlign = 'right';
+			td0.style.whiteSpace = 'nowrap';
+			// td0.style.width = '50px';
+			// td0.style.tableLayout = 'fixed';
+
+			var tableCellContent = document.createElement("span");
+
+			if (loudnesses[row] % 2 == 0) {
+				tableCellContent.innerHTML = loudnesses[row] + " &ndash;&ndash;"
+			} else {
+				tableCellContent.innerHTML = "&ndash;";
+			}
+			td0.appendChild(tableCellContent);
+
+			for (var col = 0; col < numColumns; col++) {
+				var td = tr.insertCell();
+				var bt = document.createElement("BUTTON");
+				bt.id = 'button2_' + frequencies[col] + '_' + loudnesses[row];
+
+				bt.className = "soundbutton";
+				var colorRate = 1 - (row / 120) * 2;
+				bt.style.backgroundColor = `hsla(24,100%,50%, ${colorRate})`;
+
+
+
+				bt.dataset.frequency = frequencies[col];
+				bt.dataset.loudness = loudnesses[row];
+				bt.onclick = function() {
+					createSound2()
+				};
+				td.appendChild(bt);
+
+			}
+		}
+
+		// footer with decibels
+		tr1 = tbl.insertRow();
+		td0 = tr1.insertCell();
+		td0.style.textAlign = 'center';
+		var footerdB = document.createElement("span");
+		footerdB.innerHTML = 'dB';
+		td0.appendChild(footerdB);
+
+		for (col1 = 0; col1 < numColumns; col1++) {
+			var td1 = tr1.insertCell();
+			var sp = document.createElement("SPAN");
+			sp.id = 'footer2_' + frequencies[col1];
+			td1.appendChild(sp);
+			td1.style.textAlign = 'center';
+		}
+
+		document.getElementById("soundtable2").appendChild(tbl);
+	}
+	else {
+		var para = document.createElement("p");
+		para.innerHTML = "Sorry, your web browser does not support HTML5 audio which is needed for this page.";
+		para.style.color = "red";
+		document.getElementById("soundtable2").appendChild(para);
+	}
+}
+
+function createTable4() {
+	if (context) {
+		var tbl = document.createElement('table');
+
+		// heading with frequencies
+		var tr1 = tbl.insertRow();
+		var td0 = tr1.insertCell();
+		var headerdB = document.createElement("span");
+		headerdB.innerHTML = 'dB';
+		td0.style.textAlign = 'center';
+		td0.appendChild(headerdB);
+
+		for (var col1 = 0; col1 < numColumns; col1++) {
+			var td1 = tr1.insertCell();
+			var freqDisplay = document.createElement("span");
+			td1.style.fontSize = 'xx-small';
+			if (frequencies[col1] > 999)
+				freqDisplay.innerHTML = frequencies[col1] / 1000 + 'kHz';
+			else
+				freqDisplay.innerHTML = frequencies[col1] + 'Hz';
+			td1.appendChild(freqDisplay);
+			td1.style.textAlign = 'center';
+		}
+
+		for (var row = 0; row < numRows; row++) {
+			var tr = tbl.insertRow();
+			// first column with decibels
+			td0 = tr.insertCell();
+			td0.style.borderRightColor = 'black';
+			td0.style.borderRightWidth = '2px';
+			td0.style.borderRightStyle = 'solid';
+			td0.style.textAlign = 'right';
+			td0.style.whiteSpace = 'nowrap';
+			// td0.style.width = '50px';
+			// td0.style.tableLayout = 'fixed';
+
+			var tableCellContent = document.createElement("span");
+
+			if (loudnesses[row] % 2 == 0) {
+				tableCellContent.innerHTML = loudnesses[row] + " &ndash;&ndash;"
+			} else {
+				tableCellContent.innerHTML = "&ndash;";
+			}
+			td0.appendChild(tableCellContent);
+
+			for (var col = 0; col < numColumns; col++) {
+				var td = tr.insertCell();
+				var bt = document.createElement("BUTTON");
+				bt.id = 'button3_' + frequencies[col] + '_' + loudnesses[row];
+
+				bt.className = "soundbutton";
+				var colorRate = 1 - (row / 120) * 2;
+				bt.style.backgroundColor = `hsla(24,100%,50%, ${colorRate})`;
+
+
+
+				bt.dataset.frequency = frequencies[col];
+				bt.dataset.loudness = loudnesses[row];
+				bt.onclick = function() {
+					createSound3()
+				};
+				td.appendChild(bt);
+
+			}
+		}
+
+		// footer with decibels
+		tr1 = tbl.insertRow();
+		td0 = tr1.insertCell();
+		td0.style.textAlign = 'center';
+		var footerdB = document.createElement("span");
+		footerdB.innerHTML = 'dB';
+		td0.appendChild(footerdB);
+
+		for (col1 = 0; col1 < numColumns; col1++) {
+			var td1 = tr1.insertCell();
+			var sp = document.createElement("SPAN");
+			sp.id = 'footer3_' + frequencies[col1];
+			td1.appendChild(sp);
+			td1.style.textAlign = 'center';
+		}
+
+		document.getElementById("soundtable3").appendChild(tbl);
+	}
+	else {
+		var para = document.createElement("p");
+		para.innerHTML = "Sorry, your web browser does not support HTML5 audio which is needed for this page.";
+		para.style.color = "red";
+		document.getElementById("soundtable3").appendChild(para);
+	}
+}
+function createTable3() {
+	if (context) {
+		var tbl = document.createElement('table');
+
+		// heading with frequencies
+		var tr1 = tbl.insertRow();
+		var td0 = tr1.insertCell();
+		var headerdB = document.createElement("span");
+		headerdB.innerHTML = 'dB';
+		td0.style.textAlign = 'center';
+		td0.appendChild(headerdB);
+
+		for (var col1 = 0; col1 < numColumns; col1++) {
+			var td1 = tr1.insertCell();
+			var freqDisplay = document.createElement("span");
+			td1.style.fontSize = 'xx-small';
+			if (frequencies[col1] > 999)
+				freqDisplay.innerHTML = frequencies[col1] / 1000 + 'kHz';
+			else
+				freqDisplay.innerHTML = frequencies[col1] + 'Hz';
+			td1.appendChild(freqDisplay);
+			td1.style.textAlign = 'center';
+		}
+
+		for (var row = 0; row < numRows; row++) {
+			var tr = tbl.insertRow();
+			// first column with decibels
+			td0 = tr.insertCell();
+			td0.style.borderRightColor = 'black';
+			td0.style.borderRightWidth = '2px';
+			td0.style.borderRightStyle = 'solid';
+			td0.style.textAlign = 'right';
+			td0.style.whiteSpace = 'nowrap';
+			// td0.style.width = '50px';
+			// td0.style.tableLayout = 'fixed';
+
+			var tableCellContent = document.createElement("span");
+
+			if (loudnesses[row] % 2 == 0) {
+				tableCellContent.innerHTML = loudnesses[row] + " &ndash;&ndash;"
+			} else {
+				tableCellContent.innerHTML = "&ndash;";
+			}
+			td0.appendChild(tableCellContent);
+
+			for (var col = 0; col < numColumns; col++) {
+				var td = tr.insertCell();
+				var bt = document.createElement("BUTTON");
+				bt.id = 'button4_' + frequencies[col] + '_' + loudnesses[row];
+
+				bt.className = "soundbutton";
+				var colorRate = 1 - (row / 120) * 2;
+				bt.style.backgroundColor = `hsla(24,100%,50%, ${colorRate})`;
+
+
+
+				bt.dataset.frequency = frequencies[col];
+				bt.dataset.loudness = loudnesses[row];
+				bt.onclick = function() {
+					createSound4()
+				};
+				td.appendChild(bt);
+
+			}
+		}
+
+		// footer with decibels
+		tr1 = tbl.insertRow();
+		td0 = tr1.insertCell();
+		td0.style.textAlign = 'center';
+		var footerdB = document.createElement("span");
+		footerdB.innerHTML = 'dB';
+		td0.appendChild(footerdB);
+
+		for (col1 = 0; col1 < numColumns; col1++) {
+			var td1 = tr1.insertCell();
+			var sp = document.createElement("SPAN");
+			sp.id = 'footer4_' + frequencies[col1];
+			td1.appendChild(sp);
+			td1.style.textAlign = 'center';
+		}
+
+		document.getElementById("soundtable4").appendChild(tbl);
+	}
+	else {
+		var para = document.createElement("p");
+		para.innerHTML = "Sorry, your web browser does not support HTML5 audio which is needed for this page.";
+		para.style.color = "red";
+		document.getElementById("soundtable4").appendChild(para);
+	}
+}
+
+function playAudio(url) {
+  new Audio(url).play();
+}
+</script>
+</head>
+ <body onload="createTable();">
+	 
+<h1>Hearing Assessment</h1>
+<h2>WARNING: DO NOT START AT THE TOP OF THE TABLE - INJURY MAY OCCUR</h2>
+<p>Thank you for your participation.</p>
+<p>1. Please sit quietly for 3 minutes.</p>
+<p id="timer"></p>
+
+<script>
+// Set the date we're counting down to
+var start = new Date().getTime();
+var countDownDate = start + 180000;
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("timer").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+	clearInterval(x);
+	document.getElementById("timer").innerHTML = "Proceed to step 2";
+  }
+}, 1000);
+</script>
+
+<p>2. Play the test tone below.</p>
+<button onclick="document.getElementById('testTone1').play()">
+	<audio id="testTone1" src="sounds/tones/1kHz-30dB.wav" preload="none"></audio>
+	Test tone 1
+</button>
+
+<p>3. Using the following table, select a tone from each frequency band to match the loudness of the test tone.<br />Replay the test tone if necessary.</p>	 
+<div id="soundtable1">
+</div>
+
+<p>3. Please press Play and listen to the audio clip.</p>
+<button onclick="document.getElementById('audioClip1').play()">
+	<audio id="audioClip1" src="sounds/clips/Hearing Assessment_Pyotr_Ilyich_Tchaikovsky_-_1812_overture_01 -20dB.wav" preload="none"></audio>
+	Play
+</button>
+
+<p>4. Play the test tone below.</p>
+<button onclick="document.getElementById('testTone2').play()">
+	<audio id="testTone2" src="sounds/tones/1kHz-30dB.wav" preload="none"></audio>
+	Test tone 2
+</button>
+
+<p>5. Using the following table, select a tone from each frequency band to match the loudness of the test tone.<br />Replay the test tone if necessary.</p>	 	
+<div id="soundtable2">
+</div>
+
+<p>6. Please press Play and listen to the audio clip.</p>
+<button onclick="document.getElementById('audioClip2').play()">
+	<audio id="audioClip2" src="sounds/clips/Hearing Assessment_Pyotr_Ilyich_Tchaikovsky_-_1812_overture_01 -17dB.wav" preload="none"></audio>
+	Play
+</button>
+
+<p>7. Play the test tone below.</p>
+<button onclick="document.getElementById('testTone3').play()">
+	<audio id="testTone3" src="sounds/tones/1kHz-30dB.wav" preload="none"></audio>
+	Test tone 3
+</button>
+
+<p>8. Using the following table, select a tone from each frequency band to match the loudness of the test tone.<br />Replay the test tone if necessary.</p>	 	
+<div id="soundtable3">
+</div>
+
+<p>9. Please press Play and listen to the audio clip.</p>
+<button onclick="document.getElementById('audioClip1').play()">
+	<audio id="audioClip3" src="sounds/clips/Hearing Assessment_Pyotr_Ilyich_Tchaikovsky_-_1812_overture_01 -14dB.wav" preload="none"></audio>
+	Play
+</button>
+
+<p>10. Play the test tone below.</p>
+<button onclick="document.getElementById('testTone4').play()">
+	<audio id="testTone4" src="sounds/tones/1kHz-30dB.wav" preload="none"></audio>
+	Test tone 4
+</button>
+
+<p>11. Using the following table, select a tone from each frequency band to match the loudness of the test tone.<br />Replay the test tone if necessary.</p>	 	
+<div id="soundtable4">
+</div>
+
+<p>12. Finished. Thank you.</p>
+<br />
+</body>
+</html>
